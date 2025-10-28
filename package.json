@@ -2,7 +2,7 @@
 	"name": "meetverse-be",
 	"version": "1.0.0",
 	"description": "backend repot",
-	"main": "index.js",
+	"main": "server.ts",
 	"scripts": {
 		"build": "tsc",
 		"start": "node dist/server.js",
@@ -21,12 +21,17 @@
 	},
 	"homepage": "https://github.com/little-mry/meetverse-BE#readme",
 	"devDependencies": {
+		"@eslint/js": "^9.38.0",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/cors": "^2.8.19",
 		"@types/express": "^5.0.4",
-		"@types/node": "^24.9.1",
+		"@types/node": "^24.9.1",		
+		"eslint": "^9.38.0",
+		"eslint-config-prettier": "^10.1.8",
+		"prettier": "^3.6.2",
 		"ts-node-dev": "^2.0.0",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.46.2"
 	},
 	"dependencies": {
 		"bcryptjs": "^3.0.2",
