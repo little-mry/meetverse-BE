@@ -3,4 +3,4 @@ function sayHello(name: string = "World"): string {
 }
 
 console.log(sayHello());
-console.log(sayHello("Meetverse"));
+console.log(sayHello("Meetverse är här"));
