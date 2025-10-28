@@ -32,9 +32,10 @@ app.get("/health", (_req, res) => res.json({ ok: true }));
 // app.use("/meetups", meetupRouter);
 
 // 404 handler
-app.use("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ message: `${req.originalUrl} not Found` });
 });
+
 
 // (valfritt) Global error handler kan läggas till senare
 // app.use(errorHandlerMiddleware);
