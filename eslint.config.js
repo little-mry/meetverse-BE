@@ -2,6 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginPrettier from 'eslint-plugin-prettier';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   {
@@ -21,6 +22,7 @@ export default [
     },
     rules: {
       // Aktivera Prettiers regler som ESLint-fel
+      ...eslintConfigPrettier.rules,
       'prettier/prettier': 'error',
     },
   },
