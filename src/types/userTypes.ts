@@ -1,12 +1,11 @@
-import mongoose, { Document } from "mongoose";
+import { Types } from "mongoose";
 
-export interface IUser extends Document {
+export type User = {
   username: string;
-  password: string;
-  passwordHash: string;
   email: string;
-  createdAt: Date;
-  updatedAt: Date;
-  _id: mongoose.Types.ObjectId;
-  registration?: mongoose.Types.ObjectId[];
-}
+  passwordHash: string;
+  registration?: Types.ObjectId[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  _id?: Types.ObjectId;
+};
