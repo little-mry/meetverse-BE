@@ -32,7 +32,7 @@ export default [
     },
     rules: {
       'prettier/prettier': 'error', // kör Prettier som regel
-      'no-console': 'warn',
+      'no-console': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },

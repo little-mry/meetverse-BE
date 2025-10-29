@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/AppError';
 
-export const errorHandler = (err: AppError, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: AppError, _req: Request, res: Response, _next: NextFunction) => {
   console.error(`❌ [${err.statusCode || 500}] ${err.message}`);
   if (err.stack) console.error(err.stack);
 

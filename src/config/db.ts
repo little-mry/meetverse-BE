@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import type { ConnectOptions as MongooseConnectOptions } from 'mongoose';
 
 type ConnectOptions = {
   uri?: string; // default: process.env.MONGODB_URI
@@ -29,18 +30,21 @@ export async function connectDB(opts: ConnectOptions = {}) {
   let attempt = 0;
   while (attempt <= maxRetries) {
     try {
-      await mongoose.connect(uri, { appName, dbName } as any);
+      await mongoose.connect(uri, { appName, dbName } as MongooseConnectOptions);
       console.log(`[db] Connected → ${mongoose.connection.name}`);
       connecting = false;
 
       mongoose.connection.on('disconnected', () => console.warn('[db] Disconnected'));
       mongoose.connection.on('reconnected', () => console.log('[db] Reconnected'));
-      mongoose.connection.on('error', (err) => console.error('[db] Error:', err));
-
+      mongoose.connection.on('error', (err: Error) => console.error('[db] Error:', err));
       return;
-    } catch (err: any) {
+    } catch (err) {
       attempt++;
-      console.error(`[db] Connect failed (${attempt}/${maxRetries + 1}): ${err.message}`);
+      if (err instanceof Error) {
+        console.error(`[db] Connect failed (${attempt}/${maxRetries + 1}): ${err.message}`);
+      } else {
+        console.error(`[db] Connect failed (${attempt}/${maxRetries + 1}):`, err);
+      }
       if (attempt > maxRetries) {
         connecting = false;
         throw err;
