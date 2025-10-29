@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+/* import { Types } from 'mongoose';
 
 export const meetups = [
   {
@@ -272,3 +272,4 @@ export const meetups = [
     updatedAt: new Date(),
   },
 ];
+ */
