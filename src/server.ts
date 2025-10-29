@@ -3,8 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { connectDB, disconnectDB, getDBState } from './config/db.js';
 import { errorHandler } from './middleware/errorHandler.js';
-
-//import userRouter from "./routes/userRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 //import meetupRouter from "./routes/meetupRoutes.js";
 
 // Tar bort MONGO_URI då den ej ska användas - bara MONGODB_URI!
@@ -30,7 +29,7 @@ const startServer = async () => {
   await connectDB();
   console.log('✅ MongoDB connected via connectDB');
 
-  // app.use("/user", userRouter);
+  app.use("/user", userRouter);
   // app.use("/meetups", meetupRouter);
 
   // 404
