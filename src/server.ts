@@ -4,8 +4,8 @@ import cors from "cors";
 import { connectDB, disconnectDB, getDBState } from "./config/db.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
-//import authRouter from "./routes/auth.js";
-//import meetupRouter from "./routes/meetups.js";
+//import userRouter from "./routes/userRoutes.js";
+//import meetupRouter from "./routes/meetupRoutes.js";
 
 // Tar bort MONGO_URI då den ej ska användas - bara MONGODB_URI!
 
@@ -32,7 +32,7 @@ const startServer = async () => {
   await connectDB();
   console.log("✅ MongoDB connected via connectDB");
 
-  // app.use("/auth", authRouter);
+  // app.use("/user", userRouter);
   // app.use("/meetups", meetupRouter);
 
   // 404
@@ -44,7 +44,7 @@ const startServer = async () => {
 
   const port = Number(process.env.PORT) || 3000;
   const server = app.listen(port, () =>
-    console.log(`🚀 Server running on :${port}`)
+    console.log(`Server running on :${port}`)
   );
   const shutdown = async (signal: string) => {
     console.log(`[app] ${signal} received → shutting down`);
