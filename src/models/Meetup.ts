@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import type { Meetup, Review } from '../types/meetup.types';
+import type { Meetup, Review } from '../types/meetup.types.js';
 
 const reviewSchema = new Schema<Review>(
   {
