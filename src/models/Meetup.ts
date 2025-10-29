@@ -26,11 +26,6 @@ const meetupSchema = new Schema<Meetup>(
     capacity: { type: Number, default: 0 },
     registrations: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     reviews: [reviewSchema],
-    stats: {
-      confirmedCount: { type: Number, default: 0 },
-      averageRating: { type: Number, default: 0 },
-      reviewCount: { type: Number, default: 0 },
-    },
   },
   { timestamps: true },
 );
