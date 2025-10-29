@@ -29,14 +29,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
-          cache: "npm"
+          node-version: '22.x'
+          cache: 'npm'
 
       # Steg 3: Installera beroenden
       - name: Install dependencies
         run: npm ci
 
-      # Steg 4: Kör Linter
+      # Steg 4: Kör Prettier (formatera kod)
+      - name: Run Prettier (format code)
+        run: npm run format
+        
+      # Steg 5: Kör Linter
       - name: Run Lint Check
         run: npm run lint --if-present
 

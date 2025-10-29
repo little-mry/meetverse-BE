@@ -1,19 +1,19 @@
-import { Schema, model } from "mongoose";
-import bcrypt from "bcryptjs";
-import type { User } from "../types/user.types";
+import { Schema, model } from 'mongoose';
+import bcrypt from 'bcryptjs';
+import type { User } from '../types/user.types';
 
 const userSchema = new Schema<User>(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     passwordHash: { type: String, required: true },
-    registration: [{ type: Schema.Types.ObjectId, ref: "Meetup" }],
+    registration: [{ type: Schema.Types.ObjectId, ref: 'Meetup' }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("passwordHash")) return next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('passwordHash')) return next();
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -28,7 +28,7 @@ userSchema.methods.comparePassword = async function (password: string) {
   return bcrypt.compare(password, this.passwordHash);
 };
 
-userSchema.set("toJSON", {
+userSchema.set('toJSON', {
   transform: (_doc, ret: any) => {
     ret.id = ret._id?.toString();
     delete ret._id;
@@ -37,4 +37,4 @@ userSchema.set("toJSON", {
   },
 });
 
-export default model<User>("User", userSchema);
+export default model<User>('User', userSchema);

@@ -1,11 +1,11 @@
-import * as jose from "jose";
+import * as jose from 'jose';
 
 declare global {
-	namespace Express {
-		export interface Request {
-			user?: jose.JWTPayload;
-		}
-	}
+  namespace Express {
+    export interface Request {
+      user?: jose.JWTPayload;
+    }
+  }
 }
 
 export {};

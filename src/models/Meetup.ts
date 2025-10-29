@@ -1,13 +1,13 @@
-import { Schema, model } from "mongoose";
-import type { Meetup, Review } from '../types/meetup.types'
+import { Schema, model } from 'mongoose';
+import type { Meetup, Review } from '../types/meetup.types';
 
 const reviewSchema = new Schema<Review>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     rating: { type: Number, min: 1, max: 5, required: true },
     text: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const meetupSchema = new Schema<Meetup>(
@@ -24,7 +24,7 @@ const meetupSchema = new Schema<Meetup>(
     date: [{ type: Date, required: true }],
     time: String,
     capacity: { type: Number, default: 0 },
-    registrations: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    registrations: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     reviews: [reviewSchema],
     stats: {
       confirmedCount: { type: Number, default: 0 },
@@ -32,7 +32,7 @@ const meetupSchema = new Schema<Meetup>(
       reviewCount: { type: Number, default: 0 },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default model<Meetup>("Meetup", meetupSchema);
+export default model<Meetup>('Meetup', meetupSchema);

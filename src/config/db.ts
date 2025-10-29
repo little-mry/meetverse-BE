@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 type ConnectOptions = {
-  uri?: string;          // default: process.env.MONGODB_URI
-  appName?: string;      // default: package name
-  dbName?: string;       // default: from URI
-  maxRetries?: number;   // default: 5
+  uri?: string; // default: process.env.MONGODB_URI
+  appName?: string; // default: package name
+  dbName?: string; // default: from URI
+  maxRetries?: number; // default: 5
   retryDelayMs?: number; // default: 3000
 };
 
@@ -16,13 +16,13 @@ export async function connectDB(opts: ConnectOptions = {}) {
 
   const {
     uri = process.env.MONGODB_URI,
-    appName = process.env.npm_package_name || "meetverse-be",
+    appName = process.env.npm_package_name || 'meetverse-be',
     dbName = process.env.MONGODB_DBNAME, // valfritt
     maxRetries = 5,
     retryDelayMs = 3000,
   } = opts;
 
-  if (!uri) throw new Error("MONGODB_URI is not set");
+  if (!uri) throw new Error('MONGODB_URI is not set');
 
   connecting = true;
 
@@ -33,28 +33,20 @@ export async function connectDB(opts: ConnectOptions = {}) {
       console.log(`[db] Connected → ${mongoose.connection.name}`);
       connecting = false;
 
-      mongoose.connection.on("disconnected", () =>
-        console.warn("[db] Disconnected"),
-      );
-      mongoose.connection.on("reconnected", () =>
-        console.log("[db] Reconnected"),
-      );
-      mongoose.connection.on("error", (err) =>
-        console.error("[db] Error:", err),
-      );
+      mongoose.connection.on('disconnected', () => console.warn('[db] Disconnected'));
+      mongoose.connection.on('reconnected', () => console.log('[db] Reconnected'));
+      mongoose.connection.on('error', (err) => console.error('[db] Error:', err));
 
       return;
     } catch (err: any) {
       attempt++;
-      console.error(
-        `[db] Connect failed (${attempt}/${maxRetries + 1}): ${err.message}`,
-      );
+      console.error(`[db] Connect failed (${attempt}/${maxRetries + 1}): ${err.message}`);
       if (attempt > maxRetries) {
         connecting = false;
         throw err;
       }
       await new Promise((r) => setTimeout(r, retryDelayMs));
-      console.log("[db] Retrying…");
+      console.log('[db] Retrying…');
     }
   }
 }
@@ -62,7 +54,7 @@ export async function connectDB(opts: ConnectOptions = {}) {
 export async function disconnectDB() {
   if (mongoose.connection.readyState !== 0) {
     await mongoose.disconnect();
-    console.log("[db] Connection closed");
+    console.log('[db] Connection closed');
   }
 }
 

@@ -1,8 +1,8 @@
-import globals from "globals";
-import js from "@eslint/js";
-import tseslint from "typescript-eslint";
-import prettierPlugin from "eslint-plugin-prettier";
-import prettierConfig from "eslint-config-prettier";
+import globals from 'globals';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
 export default [
   // 1) ESLint rekommenderade regler (JS)
@@ -16,10 +16,10 @@ export default [
 
   // 4) Projektets egna inställningar/regler
   {
-    files: ["**/*.ts"],
+    files: ['**/*.ts'],
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
         ...globals.node,
         ...globals.es2021,
@@ -31,19 +31,16 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
-      "prettier/prettier": "error", // kör Prettier som regel
-      "no-console": "warn",
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
+      'prettier/prettier': 'error', // kör Prettier som regel
+      'no-console': 'warn',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
 
   // 5) Ignorerade paths
   {
-    ignores: ["dist/", "node_modules/", ".vscode/"],
+    ignores: ['dist/', 'node_modules/', '.vscode/'],
   },
 ];
 
