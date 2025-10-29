@@ -1,3 +1,53 @@
+import globals from "globals";
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+import prettierPlugin from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
+
+export default [
+  // 1) ESLint rekommenderade regler (JS)
+  js.configs.recommended,
+
+  // 2) TypeScript-regler — detta är en ARRAY → sprids på toppnivå
+  ...tseslint.configs.recommended,
+
+  // 3) Stäng av regler som krockar med Prettier (flat-config-kompatibel)
+  prettierConfig,
+
+  // 4) Projektets egna inställningar/regler
+  {
+    files: ["**/*.ts"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.es2021,
+      },
+      // Sätt INTE parser här – tseslint-configs ovan tar hand om det.
+      // Vill du köra type-checked-regler? Se kommentaren nedan.
+    },
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      "prettier/prettier": "error", // kör Prettier som regel
+      "no-console": "warn",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ],
+    },
+  },
+
+  // 5) Ignorerade paths
+  {
+    ignores: ["dist/", "node_modules/", ".vscode/"],
+  },
+];
+
+/* 
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
@@ -45,4 +95,4 @@ export default [
       'no-console': 'warn',
     },
   },
-];
+]; */
