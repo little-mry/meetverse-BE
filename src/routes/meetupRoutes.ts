@@ -4,6 +4,7 @@ import {
   getMeetupById,
   registerToMeetup,
   unregisterFromMeetup,
+  postReview,
 } from '../controllers/meetupController.js';
 import { authMiddleware } from '../middleware/auth.js';
 
@@ -14,4 +15,5 @@ router.get('/', getAllMeetups);
 router.get('/:id', getMeetupById);
 router.post('/:id/register', registerToMeetup);
 router.delete('/:id/register', unregisterFromMeetup);
+router.post('/:id/reviews', postReview);
 export default router;
