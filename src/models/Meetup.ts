@@ -10,6 +10,14 @@ const reviewSchema = new Schema<Review>(
   { timestamps: true },
 );
 
+reviewSchema.set('toJSON', {
+  transform: (_doc, ret: Record<string, unknown>) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});
+
 const meetupSchema = new Schema<Meetup>(
   {
     title: { type: String, required: true, trim: true },
@@ -29,5 +37,13 @@ const meetupSchema = new Schema<Meetup>(
   },
   { timestamps: true },
 );
+
+meetupSchema.set('toJSON', {
+  transform: (_doc, ret: Record<string, unknown>) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  },
+});
 
 export default model<Meetup>('Meetup', meetupSchema);
