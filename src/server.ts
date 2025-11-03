@@ -24,13 +24,13 @@ const startServer = async () => {
   app.use(express.json());
 
   // Healthcheck
-  app.get('/health', (_req, res) => res.json({ ok: true, dbState: getDBState() }));
+  app.get('/api/health', (_req, res) => res.json({ ok: true, dbState: getDBState() }));
 
   await connectDB();
   console.log('✅ MongoDB connected via connectDB');
 
-  app.use('/user', userRouter);
-  app.use('/meetups', meetupRouter);
+  app.use('/api/user', userRouter);
+  app.use('api//meetups', meetupRouter);
 
   // 404
   app.use((req, res) => {
