@@ -30,7 +30,7 @@ const startServer = async () => {
   console.log('✅ MongoDB connected via connectDB');
 
   app.use('/api/user', userRouter);
-  app.use('api//meetups', meetupRouter);
+  app.use('/api/meetups', meetupRouter);
 
   // 404
   app.use((req, res) => {
