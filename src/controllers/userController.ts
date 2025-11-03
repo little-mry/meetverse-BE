@@ -66,3 +66,23 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     next(error);
   }
 };
+
+export const getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return next(new AppError('Ogiltig token-payload', 401));
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(new AppError('Användaren hittades inte', 404));
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
