@@ -3,9 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import { connectDB, disconnectDB, getDBState } from './config/db.js';
 import { errorHandler } from './middleware/errorHandler.js';
-
-//import userRouter from "./routes/userRoutes.js";
-//import meetupRouter from "./routes/meetupRoutes.js";
+import userRouter from './routes/userRoutes.js';
+import meetupRouter from './routes/meetupRoutes.js';
 
 // Tar bort MONGO_URI då den ej ska användas - bara MONGODB_URI!
 
@@ -15,7 +14,7 @@ const startServer = async () => {
   // CORS
   app.use(
     cors({
-      origin: process.env.CLIENT_URL || 'http://localhost:5173',
+      origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true,
@@ -25,13 +24,13 @@ const startServer = async () => {
   app.use(express.json());
 
   // Healthcheck
-  app.get('/health', (_req, res) => res.json({ ok: true, dbState: getDBState() }));
+  app.get('/api/health', (_req, res) => res.json({ ok: true, dbState: getDBState() }));
 
   await connectDB();
   console.log('✅ MongoDB connected via connectDB');
 
-  // app.use("/user", userRouter);
-  // app.use("/meetups", meetupRouter);
+  app.use('/api/user', userRouter);
+  app.use('/api/meetups', meetupRouter);
 
   // 404
   app.use((req, res) => {
