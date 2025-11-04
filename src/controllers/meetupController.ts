@@ -151,20 +151,22 @@ export const postReview = async (req: Request, res: Response, next: NextFunction
     if (!userIdString) {
       return next(new AppError('Unauthorized', 401));
     }
-
     const userId = new Types.ObjectId(userIdString);
 
-    if (!userId) {
-      return next(new AppError('Unauthorized', 401));
-    }
 
     if (typeof rating !== 'number' || rating < 1 || rating > 5) {
       return next(new AppError('Rating must be a number between 1 and 5', 400));
     }
 
-    const meetup = await Meetup.findById(id);
+    const [meetup, user] = await Promise.all([
+      Meetup.findById(id),
+      User.findById(userId).select('username'),
+    ]);
     if (!meetup) {
       return next(new AppError('Meetup not found', 404));
+    }
+    if (!user) {
+      return next(new AppError('User not found', 404));
     }
 
     const isRegistered = meetup.registrations?.some((regId: Types.ObjectId) =>
@@ -175,14 +177,16 @@ export const postReview = async (req: Request, res: Response, next: NextFunction
       return next(new AppError('Only registered user can post reviews', 400));
     }
 
-    meetup.reviews.push({ userId, rating, text });
+    meetup.reviews.push({ userId, username: user.username, rating, text });
     await meetup.save();
+
+    const created = meetup.reviews[meetup.reviews.length - 1];
 
     res.status(201).json({
       status: 'success',
       message: 'Review added successfully',
       data: { meetup },
-      review: { rating, text },
+      review: created,
     });
   } catch (error) {
     next(error);
