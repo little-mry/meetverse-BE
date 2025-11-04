@@ -4,6 +4,7 @@ import type { Meetup, Review } from '../types/meetup.types.js';
 const reviewSchema = new Schema<Review>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    username: { type: String, required: true },
     rating: { type: Number, min: 1, max: 5, required: true },
     text: String,
   },
