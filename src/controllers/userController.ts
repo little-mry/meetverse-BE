@@ -2,7 +2,7 @@ import { type Request, type Response, type NextFunction } from 'express';
 import User from '../models/User.js';
 import { generateToken } from '../utils/token.js';
 import { AppError } from '../utils/AppError.js';
-import type { User as UserType, UserLogin } from '../types/user.types.js';
+import type { UserLogin } from '../types/user.types.js';
 
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
