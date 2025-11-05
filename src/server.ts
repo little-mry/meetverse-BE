@@ -11,7 +11,7 @@ const startServer = async () => {
   const app = express();
 
   // CORS
-  const rawOrigins = process.env.FRONTEND_ORIGINS ?? 'http://localhost:5173';
+  const rawOrigins = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
 const ALLOWED_ORIGINS = rawOrigins
   .split(',')
   .map(s => s.trim())
