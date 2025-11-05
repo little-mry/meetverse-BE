@@ -1,8 +1,8 @@
-import Meetup from '../models/Meetup';
+import Meetup from '../models/Meetup.js';
 import type { Request, Response, NextFunction } from 'express';
 import type { FilterQuery } from 'mongoose';
-import { AppError } from '../utils/AppError';
-import User from '../models/User';
+import { AppError } from '../utils/AppError.js';
+import User from '../models/User.js';
 import { Types } from 'mongoose';
 
 export const getAllMeetups = async (req: Request, res: Response, next: NextFunction) => {
