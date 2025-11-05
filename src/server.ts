@@ -6,20 +6,29 @@ import { errorHandler } from './middleware/errorHandler.js';
 import userRouter from './routes/userRoutes.js';
 import meetupRouter from './routes/meetupRoutes.js';
 
-// Tar bort MONGO_URI då den ej ska användas - bara MONGODB_URI!
 
 const startServer = async () => {
   const app = express();
 
   // CORS
-  app.use(
-    cors({
-      origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-      credentials: true,
-    }),
-  );
+  const rawOrigins = process.env.FRONTEND_ORIGINS ?? 'http://localhost:5173';
+const ALLOWED_ORIGINS = rawOrigins
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }),
+);
 
   app.use(express.json());
 
