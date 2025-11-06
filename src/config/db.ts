@@ -2,23 +2,23 @@ import mongoose from 'mongoose';
 import type { ConnectOptions as MongooseConnectOptions } from 'mongoose';
 
 type ConnectOptions = {
-  uri?: string; // default: process.env.MONGODB_URI
-  appName?: string; // default: package name
-  dbName?: string; // default: from URI
-  maxRetries?: number; // default: 5
-  retryDelayMs?: number; // default: 3000
+  uri?: string;
+  appName?: string;
+  dbName?: string;
+  maxRetries?: number;
+  retryDelayMs?: number;
 };
 
 let connecting = false;
 
 export async function connectDB(opts: ConnectOptions = {}) {
-  if (mongoose.connection.readyState === 1) return; // already connected
+  if (mongoose.connection.readyState === 1) return;
   if (connecting) return;
 
   const {
     uri = process.env.MONGODB_URI,
     appName = process.env.npm_package_name || 'meetverse-be',
-    dbName = process.env.MONGODB_DBNAME, // valfritt
+    dbName = process.env.MONGODB_DBNAME,
     maxRetries = 5,
     retryDelayMs = 3000,
   } = opts;
@@ -62,7 +62,6 @@ export async function disconnectDB() {
   }
 }
 
-/** 0=disconnected, 1=connected, 2=connecting, 3=disconnecting */
 export function getDBState() {
   return mongoose.connection.readyState;
 }
