@@ -12,13 +12,3 @@ export class AppError extends Error {
     Error.captureStackTrace(this);
   }
 }
-
-/*  Så använder du AppError i dina controllers
-import { AppError } from "../utils/AppError.js";
-
-export const getUser = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-  if (!user) return next(new AppError("Användare hittades inte", 404));
-
-  res.json(user);
-};*/
