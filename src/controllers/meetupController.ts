@@ -81,6 +81,9 @@ export const registerToMeetup = async (req: Request, res: Response, next: NextFu
       return next(new AppError('Meetup not found', 404));
     }
 
+    if (meetup.capacity && meetup.registrations.length >= meetup.capacity) {
+      return next(new AppError('Meetup is full, registration is not possible.', 400));
+    }
     if (meetup.registrations.includes(userId)) {
       return next(new AppError('User already registered', 400));
     }
